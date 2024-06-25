@@ -63,7 +63,7 @@ fn cyclic_xor_in_place(data: &Bound<'_, PyByteArray>, key: &Bound<'_, PyBytes>) 
 }
 
 #[py_module]
-fn core(module: &Bound<'_, PyModule>) -> PyResult<()> {
+fn _xor_cipher_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
     module.add_function(wrap_py_function_bound!(xor, module)?)?;
     module.add_function(wrap_py_function_bound!(cyclic_xor, module)?)?;
     module.add_function(wrap_py_function_bound!(xor_in_place, module)?)?;

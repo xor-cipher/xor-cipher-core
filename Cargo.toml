@@ -13,6 +13,7 @@ keywords = ["xor", "cipher", "core"]
 publish = false
 
 [lib]
+name = "_xor_cipher_core"
 crate-type = ["cdylib"]
 
 [dependencies.pyo3]

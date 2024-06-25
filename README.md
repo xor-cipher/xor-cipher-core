@@ -58,7 +58,7 @@ git = "https://github.com/xor-cipher/xor-cipher-core.git"
 Use the `xor` function to perform the simple XOR cipher:
 
 ```python
->>> from xor_cipher.core import xor
+>>> from xor_cipher_core import xor
 >>> xor(b"Hello, world!", 0x42)
 b"\n'..-nb5-0.&c"
 ```
@@ -68,7 +68,7 @@ b"\n'..-nb5-0.&c"
 Use the `cyclic_xor` function to perform the cyclic XOR variation:
 
 ```python
->>> from xor_cipher.core import cyclic_xor
+>>> from xor_cipher_core import cyclic_xor
 >>> cyclic_xor(b"Hello, world!", b"BLOB")
 b"\n)#.-`o5->#&c"
 ```
@@ -78,7 +78,7 @@ b"\n)#.-`o5->#&c"
 There are functions to perform the XOR cipher in-place, on `bytearray` instances:
 
 ```python
->>> from xor_cipher.core import xor_in_place
+>>> from xor_cipher_core import xor_in_place
 >>> data = bytearray(b"Hello, world!")
 >>> xor_in_place(data, 0x42)
 >>> data
