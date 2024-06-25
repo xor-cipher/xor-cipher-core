@@ -117,7 +117,7 @@ jobs:
         uses: PyO3/maturin-action@v1
         with:
           target: ${{ matrix.target }}
-          args: --release --out dist --find-interpreter
+          args: --release --out dist --interpreter ${{ matrix.python-version }}
 
       - name: Upload wheel
         uses: actions/upload-artifact@v4
@@ -150,7 +150,7 @@ jobs:
         uses: PyO3/maturin-action@v1
         with:
           target: ${{ matrix.target }}
-          args: --release --out dist --find-interpreter
+          args: --release --out dist --interpreter ${{ matrix.python-version }}
 
       - name: Upload wheel
         uses: actions/upload-artifact@v4
@@ -183,7 +183,7 @@ jobs:
         with:
           target: ${{ matrix.target }}
           manylinux: auto
-          args: --release --out dist --find-interpreter
+          args: --release --out dist --interpreter ${{ matrix.python-version }}
 
       - name: Upload wheel
         uses: actions/upload-artifact@v4
@@ -219,7 +219,7 @@ jobs:
         with:
           target: ${{ matrix.target }}
           manylinux: auto
-          args: --release --out dist --find-interpreter
+          args: --release --out dist --interpreter ${{ matrix.python-version }}
 
       - name: Upload wheel
         uses: actions/upload-artifact@v4
@@ -252,7 +252,7 @@ jobs:
         with:
           target: ${{ matrix.target }}
           manylinux: musllinux_1_2
-          args: --release --out dist --find-interpreter
+          args: --release --out dist --interpreter ${{ matrix.python-version }}
 
       - name: Upload wheel
         uses: actions/upload-artifact@v4
@@ -285,7 +285,7 @@ jobs:
         with:
           target: ${{ matrix.target }}
           manylinux: musllinux_1_2
-          args: --release --out dist --find-interpreter
+          args: --release --out dist --interpreter ${{ matrix.python-version }}
 
       - name: Upload wheel
         uses: actions/upload-artifact@v4
