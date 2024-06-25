@@ -26,8 +26,8 @@ classifiers = [
 [project.urls]
 Homepage = "https://xor-cipher.org/"
 Documentation = "https://docs.xor-cipher.org/"
-Issues = "https://github.com/xor-cipher/xor-cipher/issues"
-Repository = "https://github.com/xor-cipher/xor-cipher"
+Issues = "https://github.com/xor-cipher/xor-cipher-core/issues"
+Repository = "https://github.com/xor-cipher/xor-cipher-core"
 
 [tool.maturin]
 module-name = "xor_cipher.core"

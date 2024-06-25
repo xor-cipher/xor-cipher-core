@@ -6,7 +6,7 @@ Thank you for taking the time to responsibly disclose any problems you find.
 
 **Do not file public issues as they are open for everyone to see!**
 
-All security vulnerabilities in `xor-cipher` should be reported by email
+All security vulnerabilities in `xor-cipher-core` should be reported by email
 to [security@xor-cipher.org][Security Email].
 Your report will be acknowledged within 24 hours, and you will receive a more
 detailed response within 48 hours indicating the next steps in handling your report.
@@ -23,7 +23,7 @@ more likely to be every 24-48 hours.
 
 ## Disclosure Policy
 
-`xor-cipher` has a 5-step disclosure process:
+`xor-cipher-core` has a 5-step disclosure process:
 
 1. The security report is received and is assigned a primary handler.
    This person will coordinate the fix and release process.
