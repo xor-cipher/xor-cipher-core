@@ -1,0 +1,351 @@
+name: release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: The version to release, without the leading `v`.
+        type: string
+        required: true
+
+env:
+  bot-name: nekit[bot]
+  bot-email: bot@nekit.dev
+  changelog: CHANGELOG-${{ inputs.version }}.md
+
+jobs:
+  changelog:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install changelogging
+        run: cargo install changelogging
+
+      - name: Build changelog ${{ inputs.version }}
+        run: changelogging preview > ${{ env.changelog }}
+
+      - name: Upload changelog ${{ inputs.version }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: changelog
+          path: ${{ env.changelog }}
+
+      - name: Build changelog
+        run: changelogging build --stage --remove
+
+      - name: Setup bot user
+        run: |
+          git config --local user.name ${{ env.bot-name }}
+          git config --local user.email ${{ env.bot-email }}
+
+      - name: Commit and push
+        run: |
+          git commit -m "Add ${{ inputs.version }} to the changelog."
+          git push
+
+  tag:
+    runs-on: ubuntu-latest
+    needs: changelog
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup bot user
+        run: |
+          git config --local user.name ${{ env.bot-name }}
+          git config --local user.email ${{ env.bot-email }}
+
+      - name: Tag and push
+        run: |
+          git tag v${{ inputs.version }}
+          git push --tags
+
+  build-source:
+    runs-on: ubuntu-latest
+    needs: tag
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build source
+        uses: PyO3/maturin-action@v1
+        with:
+          command: sdist
+          args: --out dist
+
+      - name: Upload source
+        uses: actions/upload-artifact@v4
+        with:
+          name: wheels-source
+          path: dist
+
+  build-macos:
+    runs-on: macos-latest
+    needs: tag
+
+    strategy:
+      matrix:
+        target:
+          - x86_64-apple-darwin
+          - aarch64-apple-darwin
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Build wheel
+        uses: PyO3/maturin-action@v1
+        with:
+          target: ${{ matrix.target }}
+          args: --release --out dist --find-interpreter
+
+      - name: Upload wheel
+        uses: actions/upload-artifact@v4
+        with:
+          name: wheels-${{ matrix.target }}-${{ matrix.python-version }}
+          path: dist
+
+  build-windows:
+    runs-on: windows-latest
+    needs: tag
+
+    strategy:
+      matrix:
+        target:
+          - x86_64-pc-windows-msvc
+          - i686-pc-windows-msvc
+          - aarch64-pc-windows-msvc
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Build wheel
+        uses: PyO3/maturin-action@v1
+        with:
+          target: ${{ matrix.target }}
+          args: --release --out dist --find-interpreter
+
+      - name: Upload wheel
+        uses: actions/upload-artifact@v4
+        with:
+          name: wheels-${{ matrix.target }}-${{ matrix.python-version }}
+          path: dist
+
+  build-linux:
+    runs-on: ubuntu-latest
+    needs: tag
+
+    strategy:
+      matrix:
+        target:
+          - x86_64-unknown-linux-gnu
+          - i686-unknown-linux-gnu
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Build wheel
+        uses: PyO3/maturin-action@v1
+        with:
+          target: ${{ matrix.target }}
+          manylinux: auto
+          args: --release --out dist --find-interpreter
+
+      - name: Upload wheel
+        uses: actions/upload-artifact@v4
+        with:
+          name: wheels-${{ matrix.target }}-${{ matrix.python-version }}
+          path: dist
+
+  build-linux-cross:
+    runs-on: ubuntu-latest
+    needs: tag
+
+    strategy:
+      matrix:
+        target:
+          - aarch64-unknown-linux-gnu
+          - armv7-unknown-linux-gnueabihf
+          - s390x-unknown-linux-gnu
+          - powerpc64le-unknown-linux-gnu
+          - powerpc64-unknown-linux-gnu
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Build wheel
+        uses: PyO3/maturin-action@v1
+        with:
+          target: ${{ matrix.target }}
+          manylinux: auto
+          args: --release --out dist --find-interpreter
+
+      - name: Upload wheel
+        uses: actions/upload-artifact@v4
+        with:
+          name: wheels-${{ matrix.target }}-${{ matrix.python-version }}
+          path: dist
+
+  build-musl:
+    runs-on: ubuntu-latest
+    needs: tag
+
+    strategy:
+      matrix:
+        target:
+          - x86_64-unknown-linux-musl
+          - i686-unknown-linux-musl
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Build wheel
+        uses: PyO3/maturin-action@v1
+        with:
+          target: ${{ matrix.target }}
+          manylinux: musllinux_1_2
+          args: --release --out dist --find-interpreter
+
+      - name: Upload wheel
+        uses: actions/upload-artifact@v4
+        with:
+          name: wheels-${{ matrix.target }}
+          path: dist
+
+  build-musl-cross:
+    runs-on: ubuntu-latest
+    needs: tag
+
+    strategy:
+      matrix:
+        target:
+          - aarch64-unknown-linux-musl
+          - armv7-unknown-linux-musleabihf
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Build wheel
+        uses: PyO3/maturin-action@v1
+        with:
+          target: ${{ matrix.target }}
+          manylinux: musllinux_1_2
+          args: --release --out dist --find-interpreter
+
+      - name: Upload wheel
+        uses: actions/upload-artifact@v4
+        with:
+          name: wheels-${{ matrix.target }}-${{ matrix.python-version }}
+          path: dist
+
+  publish-python:
+    runs-on: ubuntu-latest
+    needs:
+      - build-source
+      - build-macos
+      - build-windows
+      - build-linux
+      - build-linux-cross
+      - build-musl
+      - build-musl-cross
+
+    permissions:
+      id-token: write
+
+    steps:
+      - name: Download wheels
+        uses: actions/download-artifact@v4
+        with:
+          pattern: wheels-*
+          path: wheels
+          merge-multiple: true
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          skip-existing: true
+          packages-dir: wheels
+
+  publish-release:
+    needs: publish-python
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download changelog
+        uses: actions/download-artifact@v4
+        with:
+          pattern: changelog
+          merge-multiple: true
+
+      - name: Download wheels
+        uses: actions/download-artifact@v4
+        with:
+          pattern: wheels-*
+          path: wheels
+          merge-multiple: true
+
+      - name: Publish to GitHub
+        uses: softprops/action-gh-release@v2
+        with:
+          body_path: ${{ env.changelog }}
+          files: wheels/*
+          tag_name: v${{ inputs.version }}
+          token: ${{ secrets.BOT_TOKEN }}

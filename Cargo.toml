@@ -1,0 +1,23 @@
+[package]
+name = "xor-cipher-core"
+version = "1.0.0"
+authors = ["nekitdev", "RealistikDash"]
+edition = "2021"
+description = "Simple, reusable and optimized XOR ciphers in Python (core)."
+documentation = "https://docs.xor-cipher.org/"
+readme = "README.md"
+homepage = "https://xor-cipher.org/"
+repository = "https://github.com/xor-cipher/xor-cipher"
+license = "MIT"
+keywords = ["xor", "cipher", "core"]
+publish = false
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies.pyo3]
+version = "0.22.0"
+features = ["extension-module"]
+
+[dependencies.xor-cipher]
+version = "1.0.0"
