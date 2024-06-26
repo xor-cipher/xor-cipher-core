@@ -137,6 +137,9 @@ jobs:
           - aarch64-pc-windows-msvc
         python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
 
+    env:
+      XWIN_VERSION: 16
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
