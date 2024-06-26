@@ -30,6 +30,7 @@ Issues = "https://github.com/xor-cipher/xor-cipher-core/issues"
 Repository = "https://github.com/xor-cipher/xor-cipher-core"
 
 [tool.maturin]
+module-name = "xor_cipher_core._xor_cipher_core"
 bindings = "pyo3"
 strip = true
 
