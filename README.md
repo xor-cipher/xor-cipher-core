@@ -41,7 +41,7 @@ Or by directly specifying it in the configuration like so:
 
 ```toml
 [tool.poetry.dependencies]
-xor-cipher-core = "^1.0.0"
+xor-cipher-core = "^1.1.0"
 ```
 
 Alternatively, you can add it directly from the source:
