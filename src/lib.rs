@@ -20,7 +20,7 @@ fn xor<'py>(data: &Bound<'py, PyBytes>, key: &Bound<'py, PyInt>) -> PyResult<Bou
 
     let mut rust_data = data.as_bytes().to_owned();
 
-    xor_cipher::in_place::xor_in_place(&mut rust_data, rust_key);
+    xor_cipher::xor(&mut rust_data, rust_key);
 
     Ok(PyBytes::new_bound(data.py(), &rust_data))
 }
@@ -35,7 +35,7 @@ fn cyclic_xor<'py>(data: &Bound<'py, PyBytes>, key: &Bound<'py, PyBytes>) -> Bou
 
     let mut rust_data = data.as_bytes().to_owned();
 
-    xor_cipher::in_place::cyclic_xor_in_place(&mut rust_data, rust_key);
+    xor_cipher::cyclic_xor(&mut rust_data, rust_key);
 
     PyBytes::new_bound(data.py(), &rust_data)
 }
@@ -48,7 +48,7 @@ fn xor_in_place(data: &Bound<'_, PyByteArray>, key: &Bound<'_, PyInt>) -> PyResu
 
     let rust_data = unsafe { data.as_bytes_mut() };
 
-    xor_cipher::in_place::xor_in_place(rust_data, rust_key);
+    xor_cipher::xor(rust_data, rust_key);
 
     Ok(())
 }
@@ -59,7 +59,7 @@ fn cyclic_xor_in_place(data: &Bound<'_, PyByteArray>, key: &Bound<'_, PyBytes>) 
 
     let rust_data = unsafe { data.as_bytes_mut() };
 
-    xor_cipher::in_place::cyclic_xor_in_place(rust_data, rust_key);
+    xor_cipher::cyclic_xor(rust_data, rust_key);
 }
 
 #[py_module]

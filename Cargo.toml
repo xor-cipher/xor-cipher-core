@@ -1,6 +1,6 @@
 [package]
 name = "xor-cipher-core"
-version = "1.1.0"
+version = "1.1.1"
 authors = ["nekitdev", "RealistikDash"]
 edition = "2021"
 description = "Simple, reusable and optimized XOR ciphers in Python (core)."
@@ -17,8 +17,8 @@ name = "_xor_cipher_core"
 crate-type = ["cdylib"]
 
 [dependencies.pyo3]
-version = "0.22.0"
+version = "0.22.3"
 features = ["extension-module", "generate-import-lib"]
 
 [dependencies.xor-cipher]
-version = "1.1.0"
+version = "3.0.0"

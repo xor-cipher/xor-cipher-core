@@ -5,3 +5,7 @@ target/
 # remove if lock file should be included
 
 Cargo.lock
+
+# remove if lock file should be included
+
+uv.lock

@@ -1,6 +1,6 @@
 [context]
 name = "xor-cipher-core"
-version = "1.1.0"
+version = "1.1.1"
 url = "https://github.com/xor-cipher/xor-cipher-core"
 
 [formats]

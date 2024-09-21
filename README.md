@@ -24,31 +24,23 @@ $ pip install xor-cipher-core
 Alternatively, the library can be installed from source:
 
 ```console
+$ pip install git+https://github.com/xor-cipher/xor-cipher-core.git
+```
+
+Or via cloning the repository:
+
+```console
 $ git clone https://github.com/xor-cipher/xor-cipher-core.git
 $ cd xor-cipher-core
 $ pip install .
 ```
 
-### `poetry`
+### `uv`
 
 You can add `xor-cipher-core` as a dependency with the following command:
 
 ```console
-$ poetry add xor-cipher-core
-```
-
-Or by directly specifying it in the configuration like so:
-
-```toml
-[tool.poetry.dependencies]
-xor-cipher-core = "^1.1.0"
-```
-
-Alternatively, you can add it directly from the source:
-
-```toml
-[tool.poetry.dependencies.xor-cipher-core]
-git = "https://github.com/xor-cipher/xor-cipher-core.git"
+$ uv add xor-cipher-core
 ```
 
 ## Examples
