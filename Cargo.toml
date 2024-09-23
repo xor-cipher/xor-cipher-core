@@ -21,4 +21,4 @@ version = "0.22.3"
 features = ["extension-module", "generate-import-lib"]
 
 [dependencies.xor-cipher]
-version = "3.0.0"
+version = "4.0.0"
