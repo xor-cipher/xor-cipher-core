@@ -17,7 +17,7 @@ name = "_xor_cipher_core"
 crate-type = ["cdylib"]
 
 [dependencies.pyo3]
-version = "0.22.3"
+version = "0.23.3"
 features = ["extension-module", "generate-import-lib"]
 
 [dependencies.xor-cipher]
