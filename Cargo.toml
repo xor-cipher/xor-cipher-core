@@ -1,12 +1,11 @@
 [package]
 name = "xor-cipher-core"
-version = "1.1.1"
+version = "1.1.2"
 authors = ["nekitdev", "RealistikDash"]
 edition = "2021"
 description = "Simple, reusable and optimized XOR ciphers in Python (core)."
-documentation = "https://docs.xor-cipher.org/"
 readme = "README.md"
-homepage = "https://xor-cipher.org/"
+documentation = "https://xor-cipher.github.io/xor-cipher"
 repository = "https://github.com/xor-cipher/xor-cipher-core"
 license = "MIT"
 keywords = ["xor", "cipher", "core"]

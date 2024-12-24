@@ -6,7 +6,7 @@ __url__ = "https://github.com/xor-cipher/xor-cipher-core"
 __title__ = "xor_cipher_core"
 __author__ = "nekitdev"
 __license__ = "MIT"
-__version__ = "1.1.1"
+__version__ = "1.1.2"
 
 from xor_cipher_core._xor_cipher_core import (
     cyclic_xor,

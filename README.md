@@ -7,7 +7,7 @@
 
 > *Simple, reusable and optimized XOR ciphers in Python (core).*
 
-`xor-cipher-core` is the core of `xor-cipher`.
+`xor-cipher-core` is the core of [`xor-cipher`][xor-cipher].
 
 ## Installing
 
@@ -102,7 +102,7 @@ If you are interested in contributing to `xor-cipher-core`, make sure to take a 
 
 `xor-cipher-core` is licensed under the MIT License terms. See [License][License] for details.
 
-[Email]: mailto:support@xor-cipher.org
+[Email]: mailto:support@nekit.dev
 
 [Actions]: https://github.com/xor-cipher/xor-cipher-core/actions
 
@@ -114,10 +114,12 @@ If you are interested in contributing to `xor-cipher-core`, make sure to take a 
 [License]: https://github.com/xor-cipher/xor-cipher-core/blob/main/LICENSE
 
 [Package]: https://pypi.org/project/xor-cipher-core
-[Documentation]: https://docs.xor-cipher.org/
+[Documentation]: https://xor-cipher.github.io/xor-cipher
 
 [License Badge]: https://img.shields.io/pypi/l/xor-cipher-core
 [Version Badge]: https://img.shields.io/pypi/v/xor-cipher-core
 [Downloads Badge]: https://img.shields.io/pypi/dm/xor-cipher-core
 
 [Test Badge]: https://github.com/xor-cipher/xor-cipher-core/workflows/test/badge.svg
+
+[xor-cipher]: https://github.com/xor-cipher/xor-cipher
